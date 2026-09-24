@@ -1,6 +1,6 @@
 # usage-exact
 
-An English-first Codex Skill that reports live Codex quota windows in a compact, predictable format.
+An English-first, cross-agent Agent Skill that reports live Codex quota windows in a compact, predictable format.
 
 [中文说明](README.zh-CN.md)
 
@@ -37,7 +37,7 @@ It is read-only: it does not reset limits, consume reset credits, or refresh cre
 
 ## Install
 
-Install the skill globally for Codex:
+### Codex
 
 ```bash
 npx skills add dominictpl11/usage-exact --skill usage-exact -g -a codex -y
@@ -49,11 +49,29 @@ Restart Codex or start a new conversation, then invoke it with:
 $usage-exact
 ```
 
-Codex Skills use `$` invocation. This repository does not register a custom `/usage-exact` slash command.
+Codex uses `$` invocation.
+
+### Claude Code
+
+Install the same skill globally for Claude Code:
+
+```bash
+npx skills add dominictpl11/usage-exact --skill usage-exact -g -a claude-code -y
+```
+
+Restart Claude Code or start a new session, then invoke it with:
+
+```text
+/usage-exact
+```
+
+Claude Code derives the slash command from the `usage-exact` skill directory, so no separate `.claude/commands` wrapper is needed. You can also copy `skills/usage-exact/` to `~/.claude/skills/usage-exact/` for a personal install, or `.claude/skills/usage-exact/` for a project-only install.
+
+The shared `SKILL.md` is the portable implementation. `skills/usage-exact/agents/openai.yaml` only supplies Codex-specific UI metadata.
 
 ## Requirements
 
-- Codex with a signed-in ChatGPT account
+- Codex or Claude Code running on the same machine where `quota-axi` can access the Codex quota credentials
 - Node.js 22.19 or newer
 - Network access for the upstream `quota-axi` CLI to query the first-party quota endpoint
 

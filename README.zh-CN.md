@@ -1,6 +1,6 @@
 # usage-exact
 
-一个以英文 README 为主、面向 Codex 的中文额度查询 Skill，用固定格式显示当前 Codex 的重置时间。
+一个以英文 README 为主、同时兼容 Codex 与 Claude Code 的 Agent Skill，用固定格式显示当前 Codex 的重置时间。
 
 [English README](README.md)
 
@@ -37,6 +37,8 @@ npx -y quota-axi --provider codex --json --no-credential-refresh
 
 ## 安装
 
+### Codex
+
 全局安装到 Codex：
 
 ```bash
@@ -49,11 +51,29 @@ npx skills add dominictpl11/usage-exact --skill usage-exact -g -a codex -y
 $usage-exact
 ```
 
-Codex Skill 使用 `$` 调用。本仓库不会注册自定义的 `/usage-exact` 斜杠命令。
+Codex 使用 `$` 调用。
+
+### Claude Code
+
+全局安装到 Claude Code：
+
+```bash
+npx skills add dominictpl11/usage-exact --skill usage-exact -g -a claude-code -y
+```
+
+重启 Claude Code 或新建会话，然后输入：
+
+```text
+/usage-exact
+```
+
+Claude Code 会根据 `usage-exact` Skill 目录名生成 `/usage-exact`，不需要额外创建 `.claude/commands` 包装文件。也可以把 `skills/usage-exact/` 复制到 `~/.claude/skills/usage-exact/` 做个人安装，或复制到项目内的 `.claude/skills/usage-exact/` 做项目级安装。
+
+共享的 `SKILL.md` 是跨代理实现；`skills/usage-exact/agents/openai.yaml` 只提供 Codex 的界面元数据。
 
 ## 环境要求
 
-- 已登录 ChatGPT 账号的 Codex
+- Codex 或 Claude Code 所在机器能够让 `quota-axi` 访问 Codex 额度凭据
 - Node.js 22.19 或更高版本
 - 能让上游 `quota-axi` CLI 查询官方额度接口的网络连接
 

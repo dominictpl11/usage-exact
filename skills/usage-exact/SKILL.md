@@ -1,14 +1,15 @@
 ---
 name: usage-exact
-description: "查询当前 Codex 额度，并用中文显示 5 小时、7 天和模型窗口的已用百分比、北京时间秒级重置时间、剩余时间及返回状态。Use when the user asks for exact Codex quota reset times or invokes usage-exact."
-user-invocable: true
+description: "Report current Codex quota usage with exact Beijing-time reset timestamps to the second. Use when the user asks for exact Codex quota reset times or invokes /usage-exact or $usage-exact."
+license: MIT
+compatibility: "Requires Node.js 22.19+ and network access for the quota-axi CLI. Designed for Codex and Claude Code."
 metadata:
   short-description: Exact Codex quota reset report
 ---
 
 # usage-exact
 
-When invoked, run this read-only command:
+When invoked as `$usage-exact` in Codex or `/usage-exact` in Claude Code, run this read-only command:
 
 ```text
 npx -y quota-axi --provider codex --json --no-credential-refresh
