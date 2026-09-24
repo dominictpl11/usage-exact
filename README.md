@@ -29,13 +29,13 @@ It is read-only: it does not reset limits, consume reset credits, or refresh cre
 ## Example output
 
 ```text
-Query succeeded (local time snapshot: 2026-09-24 11:21:33, Asia/Shanghai):
+**Query succeeded** (local time snapshot: **2026-09-24 11:21:33**, **Asia/Shanghai**):
 
-- 5-hour: 14% used, resets at 2026-09-24 14:07:40 (in 2 hours 46 minutes 06 seconds)
-- 7-day: 95% used, resets at 2026-09-26 19:35:06 (in 56 hours 13 minutes 32 seconds)
-- Model window: 37% used, resets at 2026-09-24 21:48:44 (in 10 hours 27 minutes 10 seconds)
+- **5-hour:** **14% used**, resets at **2026-09-24 14:07:40** (**in 2 hours 46 minutes 06 seconds**)
+- **7-day:** **95% used**, resets at **2026-09-26 19:35:06** (**in 56 hours 13 minutes 32 seconds**)
+- **Model window:** **37% used**, resets at **2026-09-24 21:48:44** (**in 10 hours 27 minutes 10 seconds**)
 
-Status: fresh.
+**Status:** **fresh**.
 ```
 
 The example uses `Asia/Shanghai` only as a sample local timezone. Runtime output follows the host's configured timezone.

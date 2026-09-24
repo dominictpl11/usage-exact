@@ -30,15 +30,16 @@ Before formatting, detect the predominant language of the invoking user message.
 If `resetsAt` is missing, localize `no reset time (n/a)`. If a percentage is missing, localize `usage unavailable`; never estimate it.
 
 Return only this format, with no explanation. The following is the English reference; translate its prose and labels into the selected language when needed:
+Use Markdown bold emphasis for the key fields exactly as shown. Keep the bold spans around the localized equivalents of the success state, snapshot time, timezone, window name, usage, reset time, countdown, and final status.
 
 ```text
-Query succeeded (local time snapshot: YYYY-MM-DD HH:mm:ss, Area/Location):
+**Query succeeded** (local time snapshot: **YYYY-MM-DD HH:mm:ss**, **Area/Location**):
 
-- 5-hour: X% used, resets at YYYY-MM-DD HH:mm:ss (in H hours M minutes SS seconds)
-- 7-day: X% used, resets at YYYY-MM-DD HH:mm:ss (in H hours M minutes SS seconds)
-- Model window: X% used, resets at YYYY-MM-DD HH:mm:ss (in H hours M minutes SS seconds)
+- **5-hour:** **X% used**, resets at **YYYY-MM-DD HH:mm:ss** (**in H hours M minutes SS seconds**)
+- **7-day:** **X% used**, resets at **YYYY-MM-DD HH:mm:ss** (**in H hours M minutes SS seconds**)
+- **Model window:** **X% used**, resets at **YYYY-MM-DD HH:mm:ss** (**in H hours M minutes SS seconds**)
 
-Status: fresh.
+**Status:** **fresh**.
 ```
 
 Omit unavailable window lines. Use the provider's actual `state.status` in the final line. If the query fails, localize `Query failed: unable to read quota data (reason)` and do not expose tokens, account ids, or raw JSON.
