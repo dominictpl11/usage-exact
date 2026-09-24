@@ -1,7 +1,7 @@
 interface:
   display_name: "Usage Exact"
-  short_description: "Show Codex quota resets to the second"
-  default_prompt: "Use $usage-exact to report my current Codex quota resets in Beijing time."
+  short_description: "Show exact local-time quota resets"
+  default_prompt: "Use $usage-exact to report my current quota reset times in my language."
 
 policy:
   allow_implicit_invocation: true

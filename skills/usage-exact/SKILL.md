@@ -1,10 +1,10 @@
 ---
 name: usage-exact
-description: "Report current Codex quota usage with exact local-time reset timestamps to the second, in the language of the user's request. Use when the user asks for exact Codex quota reset times or invokes /usage-exact or $usage-exact."
+description: "Report exact local-time quota reset windows in the language of the user's request. Use when the user asks about quota usage or reset times, or invokes /usage-exact or $usage-exact."
 license: MIT
-compatibility: "Requires Node.js 22.19+ and network access for the quota-axi CLI. Designed for Codex and Claude Code."
+compatibility: "Requires Node.js 22.19+ and network access for quota-axi. Portable across Codex, Claude Code, and compatible Agent Skills hosts."
 metadata:
-  short-description: Exact Codex quota reset report
+  short-description: Exact local-time quota reset report
 ---
 
 # usage-exact
@@ -41,4 +41,4 @@ Query succeeded (local time snapshot: YYYY-MM-DD HH:mm:ss, Area/Location):
 Status: fresh.
 ```
 
-Omit unavailable window lines. Use the provider's actual `state.status` in the final line. If the query fails, localize `Query failed: unable to read Codex quota (reason)` and do not expose tokens, account ids, or raw JSON.
+Omit unavailable window lines. Use the provider's actual `state.status` in the final line. If the query fails, localize `Query failed: unable to read quota data (reason)` and do not expose tokens, account ids, or raw JSON.

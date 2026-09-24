@@ -1,10 +1,10 @@
 # usage-exact
 
-An English-first, cross-agent Agent Skill that reports live Codex quota windows in a compact, predictable format.
+A portable Agent Skill for compact, exact quota reset reports.
 
 ## What it does
 
-`usage-exact` delegates the live quota query to [`quota-axi`](https://github.com/kunchenguid/quota-axi), then formats the result in the language of the invoking request:
+`usage-exact` delegates a live quota query to [`quota-axi`](https://github.com/kunchenguid/quota-axi), then formats the result using the invoking request's language:
 
 - 5-hour window
 - 7-day window
@@ -12,10 +12,11 @@ An English-first, cross-agent Agent Skill that reports live Codex quota windows 
 - used percentage
 - reset time in the host's local timezone, precise to seconds
 - remaining time and provider status
+- stable field order and numeric precision across supported languages
 
-## Response language
+## Scope and data source
 
-The repository is documented in English, but the skill detects the predominant language of the invoking user message and uses that language for the report. English requests receive English output, Chinese requests receive Chinese output, and other languages are matched when possible. If the language is ambiguous, the skill follows the latest direct request and falls back to English only when no language can be determined. Data, timestamps, timezone identifiers, percentages, and provider status remain unchanged.
+The skill is host-agnostic: install it in Codex, Claude Code, or another compatible Agent Skills host. The included read-only preset currently reads quota-axi's `codex` provider; the host used to invoke the skill and the provider being reported are separate concerns.
 
 The skill uses:
 
@@ -75,13 +76,13 @@ The shared `SKILL.md` is the portable implementation. `skills/usage-exact/agents
 
 ## Requirements
 
-- Codex or Claude Code running on the same machine where `quota-axi` can access the Codex quota credentials
+- Codex, Claude Code, or another compatible host running where `quota-axi` can access the configured provider credentials
 - Node.js 22.19 or newer
 - Network access for the upstream `quota-axi` CLI to query the first-party quota endpoint
 
 ## Privacy and safety
 
-The skill does not print tokens, account IDs, or raw JSON. It asks `quota-axi` for a read-only Codex quota report and only formats the returned window data. Review the upstream implementation and its privacy notes before installing updates.
+The skill does not print tokens, account IDs, or raw JSON. It asks `quota-axi` for a read-only quota report and only formats the returned window data. Review the upstream implementation and its privacy notes before installing updates.
 
 ## Attribution
 
