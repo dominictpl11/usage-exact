@@ -1,6 +1,6 @@
 ---
 name: usage-exact
-description: "Report current Codex quota usage with exact local-time reset timestamps to the second. Use when the user asks for exact Codex quota reset times or invokes /usage-exact or $usage-exact."
+description: "Report current Codex quota usage with exact local-time reset timestamps to the second, in the language of the user's request. Use when the user asks for exact Codex quota reset times or invokes /usage-exact or $usage-exact."
 license: MIT
 compatibility: "Requires Node.js 22.19+ and network access for the quota-axi CLI. Designed for Codex and Claude Code."
 metadata:
@@ -25,9 +25,11 @@ Map windows as follows:
 - `weekly` → `7-day`
 - `kind: model` or an id beginning with `model:` → `Model window` (include the window label in parentheses when there is more than one)
 
-If `resetsAt` is missing, use `no reset time (n/a)`. If a percentage is missing, use `usage unavailable`; never estimate it.
+Before formatting, detect the predominant language of the invoking user message. Respond in that language, including the success line, window labels, missing-data text, failure text, and status label. Do not switch languages because this repository is documented in English, because the host locale differs, or because the timezone identifier is English. For mixed or ambiguous input, use the language of the user's latest direct request; use English only when no language can be determined. Preserve the field order, numeric precision, timezone identifier, percentages, and provider status in every language.
 
-Return only this format, with no explanation:
+If `resetsAt` is missing, localize `no reset time (n/a)`. If a percentage is missing, localize `usage unavailable`; never estimate it.
+
+Return only this format, with no explanation. The following is the English reference; translate its prose and labels into the selected language when needed:
 
 ```text
 Query succeeded (local time snapshot: YYYY-MM-DD HH:mm:ss, Area/Location):
@@ -39,4 +41,4 @@ Query succeeded (local time snapshot: YYYY-MM-DD HH:mm:ss, Area/Location):
 Status: fresh.
 ```
 
-Omit unavailable window lines. Use the provider's actual `state.status` in the final line. If the query fails, return only `Query failed: unable to read Codex quota (reason)` and do not expose tokens, account ids, or raw JSON.
+Omit unavailable window lines. Use the provider's actual `state.status` in the final line. If the query fails, localize `Query failed: unable to read Codex quota (reason)` and do not expose tokens, account ids, or raw JSON.

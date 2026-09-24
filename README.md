@@ -4,7 +4,7 @@ An English-first, cross-agent Agent Skill that reports live Codex quota windows 
 
 ## What it does
 
-`usage-exact` delegates the live quota query to [`quota-axi`](https://github.com/kunchenguid/quota-axi), then formats the result for English-language users:
+`usage-exact` delegates the live quota query to [`quota-axi`](https://github.com/kunchenguid/quota-axi), then formats the result in the language of the invoking request:
 
 - 5-hour window
 - 7-day window
@@ -12,6 +12,10 @@ An English-first, cross-agent Agent Skill that reports live Codex quota windows 
 - used percentage
 - reset time in the host's local timezone, precise to seconds
 - remaining time and provider status
+
+## Response language
+
+The repository is documented in English, but the skill detects the predominant language of the invoking user message and uses that language for the report. English requests receive English output, Chinese requests receive Chinese output, and other languages are matched when possible. If the language is ambiguous, the skill follows the latest direct request and falls back to English only when no language can be determined. Data, timestamps, timezone identifiers, percentages, and provider status remain unchanged.
 
 The skill uses:
 
