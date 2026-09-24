@@ -2,17 +2,15 @@
 
 An English-first, cross-agent Agent Skill that reports live Codex quota windows in a compact, predictable format.
 
-[中文说明](README.zh-CN.md)
-
 ## What it does
 
-`usage-exact` delegates the live quota query to [`quota-axi`](https://github.com/kunchenguid/quota-axi), then formats the result for Chinese-language users:
+`usage-exact` delegates the live quota query to [`quota-axi`](https://github.com/kunchenguid/quota-axi), then formats the result for English-language users:
 
 - 5-hour window
 - 7-day window
 - model-specific windows when available
 - used percentage
-- reset time in `Asia/Shanghai`, precise to seconds
+- reset time in the host's local timezone, precise to seconds
 - remaining time and provider status
 
 The skill uses:
@@ -26,14 +24,16 @@ It is read-only: it does not reset limits, consume reset credits, or refresh cre
 ## Example output
 
 ```text
-查询成功（北京时间快照：2026-09-24 11:21:33）：
+Query succeeded (local time snapshot: 2026-09-24 11:21:33, Asia/Shanghai):
 
-- 5 小时：已用 14%，2026-09-24 14:07:40 重置（还有 2 小时 46 分 06 秒）
-- 7 天：已用 95%，2026-09-26 19:35:06 重置（还有 56 小时 13 分 32 秒）
-- 模型窗口：已用 37%，2026-09-24 21:48:44 重置（还有 10 小时 27 分 10 秒）
+- 5-hour: 14% used, resets at 2026-09-24 14:07:40 (in 2 hours 46 minutes 06 seconds)
+- 7-day: 95% used, resets at 2026-09-26 19:35:06 (in 56 hours 13 minutes 32 seconds)
+- Model window: 37% used, resets at 2026-09-24 21:48:44 (in 10 hours 27 minutes 10 seconds)
 
-返回状态：fresh。
+Status: fresh.
 ```
+
+The example uses `Asia/Shanghai` only as a sample local timezone. Runtime output follows the host's configured timezone.
 
 ## Install
 

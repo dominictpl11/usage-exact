@@ -1,6 +1,6 @@
 ---
 name: usage-exact
-description: "Report current Codex quota usage with exact Beijing-time reset timestamps to the second. Use when the user asks for exact Codex quota reset times or invokes /usage-exact or $usage-exact."
+description: "Report current Codex quota usage with exact local-time reset timestamps to the second. Use when the user asks for exact Codex quota reset times or invokes /usage-exact or $usage-exact."
 license: MIT
 compatibility: "Requires Node.js 22.19+ and network access for the quota-axi CLI. Designed for Codex and Claude Code."
 metadata:
@@ -17,26 +17,26 @@ npx -y quota-axi --provider codex --json --no-credential-refresh
 
 Do not reset limits, consume reset credits, refresh credentials, or replace live quota data with local session-log estimates.
 
-Read the `providers[]` entry whose `provider` is `codex`. Use its `generatedAt` value as the snapshot clock. Convert every `resetsAt` from UTC to `Asia/Shanghai`, calculate `usedPercent = 100 - percentRemaining`, and calculate remaining time as `max(0, floor(resetsAt - generatedAt))` seconds.
+Read the `providers[]` entry whose `provider` is `codex`. Use its `generatedAt` value as the snapshot clock. Detect the host's configured local timezone at runtime; use `Intl.DateTimeFormat().resolvedOptions().timeZone` when Node.js is available, and do not hard-code `Asia/Shanghai`. Convert the snapshot and every `resetsAt` from UTC to that local timezone, calculate `usedPercent = 100 - percentRemaining`, and calculate remaining time as `max(0, floor(resetsAt - generatedAt))` seconds.
 
 Map windows as follows:
 
-- `five_hour` → `5 小时`
-- `weekly` → `7 天`
-- `kind: model` or an id beginning with `model:` → `模型窗口` (include the window label in parentheses when there is more than one)
+- `five_hour` → `5-hour`
+- `weekly` → `7-day`
+- `kind: model` or an id beginning with `model:` → `Model window` (include the window label in parentheses when there is more than one)
 
-If `resetsAt` is missing, use `没有重置时间（n/a）`. If a percentage is missing, use `已用不可用`; never estimate it.
+If `resetsAt` is missing, use `no reset time (n/a)`. If a percentage is missing, use `usage unavailable`; never estimate it.
 
 Return only this format, with no explanation:
 
 ```text
-查询成功（北京时间快照：YYYY-MM-DD HH:mm:ss）：
+Query succeeded (local time snapshot: YYYY-MM-DD HH:mm:ss, Area/Location):
 
-- 5 小时：已用 X%，YYYY-MM-DD HH:mm:ss 重置（还有 H 小时 M 分 SS 秒）
-- 7 天：已用 X%，YYYY-MM-DD HH:mm:ss 重置（还有 H 小时 M 分 SS 秒）
-- 模型窗口：已用 X%，YYYY-MM-DD HH:mm:ss 重置（还有 H 小时 M 分 SS 秒）
+- 5-hour: X% used, resets at YYYY-MM-DD HH:mm:ss (in H hours M minutes SS seconds)
+- 7-day: X% used, resets at YYYY-MM-DD HH:mm:ss (in H hours M minutes SS seconds)
+- Model window: X% used, resets at YYYY-MM-DD HH:mm:ss (in H hours M minutes SS seconds)
 
-返回状态：fresh。
+Status: fresh.
 ```
 
-Omit unavailable window lines. Use the provider's actual `state.status` in the final line. If the query fails, return only `查询失败：无法读取 Codex 额度（原因）` and do not expose tokens, account ids, or raw JSON.
+Omit unavailable window lines. Use the provider's actual `state.status` in the final line. If the query fails, return only `Query failed: unable to read Codex quota (reason)` and do not expose tokens, account ids, or raw JSON.
